@@ -1,0 +1,38 @@
+name: Generate locked requirements
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # لتشغيل يدوي
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pip-tools
+        run: pip install pip-tools
+
+      - name: Generate requirements.txt
+        run: |
+          pip-compile --upgrade --output-file=requirements.txt requirements.in
+
+      - name: Upload requirements.txt as artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: locked-requirements
+          path: requirements.txt
+
+      - name: Commit and push if changed (اختياري)
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add requirements.txt
+          git diff --staged --quiet || git commit -m "Update locked requirements"
+          git push
