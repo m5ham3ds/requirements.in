@@ -1,0 +1,31 @@
+name: Generate locked requirements
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read   # فقط قراءة
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install pip-tools
+        run: pip install pip-tools
+
+      - name: Generate requirements.txt
+        run: pip-compile --upgrade --output-file=requirements.txt requirements.in
+
+      - name: Upload requirements.txt as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: locked-requirements
+          path: requirements.txt
