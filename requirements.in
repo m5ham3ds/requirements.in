@@ -1,0 +1,13 @@
+gradio
+whisperx
+torch
+torchaudio
+numpy
+faster-whisper
+ctranslate2
+transformers
+pyannote.audio
+lightning-fabric
+pytorch-lightning
+langdetect
+pillow
