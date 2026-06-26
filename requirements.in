@@ -9,4 +9,5 @@ spaces
 fastapi
 pydub
 pydantic
+langdetect
 whisperx
