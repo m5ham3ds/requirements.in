@@ -7,6 +7,5 @@ uvicorn
 websockets
 spaces
 fastapi
-audioop-lts
 pydub
 pydantic
